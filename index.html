@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#080d18">
+<title>Freedom Tap</title>
+
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+<style>
+:root {
+  --bg: #080d18;
+  --card: #111b2e;
+  --card2: #17243a;
+  --blue: #3285ff;
+  --cyan: #35d9ff;
+  --text: #ffffff;
+  --muted: #8c9bb3;
+  --green: #38df9a;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  min-height: 100vh;
+  padding-bottom: 95px;
+}
+
+.app {
+  max-width: 480px;
+  margin: auto;
+  padding: 18px 17px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+}
+
+.logo {
+  width: 43px;
+  height: 43px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #2585ff, #35dcff);
+  display: grid;
+  place-items: center;
+  font-size: 23px;
+  font-weight: 900;
+  color: white;
+  box-shadow: 0 0 25px #2585ff55;
+}
+
+.brand h1 {
+  font-size: 18px;
+  font-weight: 850;
+  letter-spacing: .5px;
+}
+
+.brand p {
+  color: var(--muted);
+  font-size: 11px;
+  margin-top: 3px;
+}
+
+.online {
+  color: var(--green);
+  font-size: 11px;
+  background: #38df9a15;
+  border: 1px solid #38df9a40;
+  padding: 7px 10px;
+  border-radius: 20px;
+}
+
+.balance-card {
+  background: linear-gradient(135deg, #173b78, #122747 65%, #102039);
+  border: 1px solid #367edb55;
+  border-radius: 23px;
+  padding: 21px;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 17px;
+}
+
+.balance-card:after {
+  content: "✦";
+  position: absolute;
+  right: 23px;
+  top: 15px;
+  font-size: 85px;
+  color: #ffffff0b;
+}
+
+.label {
+  color: #b7c9e8;
+  font-size: 12px;
+  font-weight: 650;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.balance {
+  font-size: 39px;
+  font-weight: 900;
+  margin: 9px 0 5px;
+  letter-spacing: -1px;
+}
+
+.balance span {
+  color: var(--cyan);
+  font-size: 16px;
+}
+
+.small-note {
+  color: #a9bddb;
+  font-size: 11px;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 19px;
+}
+
+.stat {
+  background: var(--card);
+  border: 1px solid #263752;
+  border-radius: 17px;
+  padding: 15px;
+}
+
+.stat-top {
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.stat-value {
+  font-size: 20px;
+  font-weight: 800;
+  margin-top: 7px;
+}
+
+.energy-bar {
+  height: 7px;
+  background: #263650;
+  border-radius: 20px;
+  overflow: hidden;
+  margin-top: 9px;
+}
+
+.energy-fill {
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(90deg, #2e83ff, #35d9ff);
+  border-radius: 20px;
+  transition: width .2s;
+}
+
+.tap-section {
+  text-align: center;
+  padding: 12px 0 20px;
+}
+
+.tap-section h2 {
+  font-size: 18px;
+  margin-bottom: 5px;
+}
+
+.tap-section p {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.tap-button {
+  width: 205px;
+  height: 205px;
+  border-radius: 50%;
+  margin: 24px auto 18px;
+  border: 0;
+  background:
+    radial-gradient(circle at 35% 28%, #63caff, #287cff 48%, #1450bd 75%);
+  box-shadow:
+    0 0 0 9px #2b83ff18,
+    0 0 0 18px #2b83ff0d,
+    0 15px 45px #1678ff55,
+    inset 0 4px 15px #ffffff50;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform .08s;
+  user-select: none;
+}
+
+.tap-button:active {
+  transform: scale(.94);
+}
+
+.tap-icon {
+  font-size: 65px;
+  line-height: 1.1;
+}
+
+.tap-button strong {
+  font-size: 19px;
+  letter-spacing: 2px;
+  margin-top: 7px;
+}
+
+.tap-hint {
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.section-title {
+  font-size: 16px;
+  font-weight: 800;
+  margin: 17px 0 12px;
+}
+
+.reward-card {
+  background: linear-gradient(120deg, #172e49, #152238);
+  border: 1px solid #284365;
+  border-radius: 17px;
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.reward-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.reward-icon {
+  width: 43px;
+  height: 43px;
+  border-radius: 13px;
+  background: #ffc94b20;
+  display: grid;
+  place-items: center;
+  font-size: 22px;
+}
+
+.reward-card h3 {
+  font-size: 13px;
+}
+
+.reward-card p {
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 4px;
+}
+
+.primary-btn {
+  background: linear-gradient(100deg, #287cff, #25b8ff);
+  color: white;
+  border: 0;
+  border-radius: 11px;
+  padding: 10px 15px;
+  font-weight: 800;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.primary-btn:disabled {
+  opacity: .45;
+}
+
+.nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  max-width: 480px;
+  margin: auto;
+  background: #101a2bfa;
+  border-top: 1px solid #263752;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  padding: 11px 5px calc(11px + env(safe-area-inset-bottom));
+  z-index: 10;
+}
+
+.nav button {
+  background: none;
+  border: 0;
+  color: #8191aa;
+  font-size: 10px;
+  cursor: pointer;
+}
+
+.nav button.active {
+  color: #48aaff;
+}
+
+.nav-icon {
+  display: block;
+  font-size: 21px;
+  margin-bottom: 5px;
+}
+
+.page {
+  display: none;
+}
+
+.page.active {
+  display: block;
+}
+
+.list-card {
+  background: var(--card);
+  border: 1px solid #263752;
+  border-radius: 16px;
+  padding: 15px;
+  margin-bottom: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.list-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.list-icon {
+  width: 42px;
+  height: 42px;
+  background: var(--card2);
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  font-size: 20px;
+}
+
+.list-card h3 {
+  font-size: 13px;
+}
+
+.list-card p {
+  color: var(--muted);
+  font-size: 11px;
+  margin-top: 5px;
+}
+
+.amount {
+  color: var(--green);
+  font-size: 12px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.invite-box {
+  background: var(--card);
+  border: 1px solid #263752;
+  padding: 17px;
+  border-radius: 17px;
+  margin-top: 15px;
+}
+
+.invite-link {
+  background: #080f1e;
+  border-radius: 10px;
+  padding: 13px;
+  color: #8fbfff;
+  font-size: 11px;
+  overflow-wrap: anywhere;
+  margin: 13px 0;
+}
+
+.wallet-card {
+  background: linear-gradient(135deg, #183a68, #14233c);
+  border-radius: 19px;
+  padding: 20px;
+  margin-bottom: 15px;
+}
+
+.wallet-card h2 {
+  font-size: 19px;
+  margin: 10px 0;
+}
+
+.wallet-card p {
+  color: #b7c9e8;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.notice {
+  color: #f2c66d;
+  background: #f2c66d12;
+  border: 1px solid #f2c66d35;
+  border-radius: 13px;
+  padding: 13px;
+  font-size: 11px;
+  line-height: 1.5;
+  margin-top: 15px;
+}
+
+.empty {
+  text-align: center;
+  padding: 35px 15px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.toast {
+  position: fixed;
+  bottom: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #1b2d46;
+  border: 1px solid #398aff;
+  color: white;
+  padding: 12px 18px;
+  border-radius: 12px;
+  font-size: 12px;
+  display: none;
+  z-index: 30;
+  white-space: nowrap;
+}
+</style>
+</head>
+
+<body>
+<div class="app">
+
+<header class="header">
+  <div class="brand">
+    <div class="logo">F</div>
+    <div>
+      <h1>FREEDOM TAP</h1>
+      <p>Freedom Token Community</p>
+    </div>
+  </div>
+  <div class="online">● LIVE</div>
+</header>
+
+<!-- HOME -->
+<section class="page active" id="home">
+
+  <div class="balance-card">
+    <div class="label">Your total balance</div>
+    <div class="balance" id="points">0 <span>PTS</span></div>
+    <div class="small-note">Keep tapping. Build your rewards.</div>
+  </div>
+
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-top">⚡ ENERGY</div>
+      <div class="stat-value" id="energy">100 / 100</div>
+      <div class="energy-bar">
+        <div class="energy-fill" id="energyFill"></div>
+      </div>
+    </div>
+
+    <div class="stat">
+      <div class="stat-top">👆 TOTAL TAPS</div>
+      <div class="stat-value" id="totalTaps">0</div>
+    </div>
+  </div>
+
+  <div class="tap-section">
+    <h2>Tap to Earn</h2>
+    <p>Tap the Freedom coin and collect points</p>
+
+    <button class="tap-button" id="tapButton">
+      <span class="tap-icon">✊</span>
+      <strong>TAP</strong>
+    </button>
+
+    <div class="tap-hint">+1 POINT PER TAP</div>
+  </div>
+
+  <h2 class="section-title">Daily Reward</h2>
+
+  <div class="reward-card">
+    <div class="reward-left">
+      <div class="reward-icon">🎁</div>
+      <div>
+        <h3>Daily Check-in</h3>
+        <p>Claim your daily bonus</p>
+      </div>
+    </div>
+    <button class="primary-btn" id="dailyButton">+100 PTS</button>
+  </div>
+</section>
+
+<!-- TASKS -->
+<section class="page" id="tasks">
+  <h2 class="section-title">🎯 Tasks & Rewards</h2>
+  <p style="color:var(--muted);font-size:12px;margin-bottom:17px">
+    Complete activities and grow your points.
+  </p>
+
+  <div class="list-card">
+    <div class="list-left">
+      <div class="list-icon">🚀</div>
+      <div>
+        <h3>Join Freedom Community</h3>
+        <p>Community task</p>
+      </div>
+    </div>
+    <span class="amount">+500 PTS</span>
+  </div>
+
+  <div class="list-card">
+    <div class="list-left">
+      <div class="list-icon">📢</div>
+      <div>
+        <h3>Follow our updates</h3>
+        <p>Social task</p>
+      </div>
+    </div>
+    <span class="amount">+300 PTS</span>
+  </div>
+
+  <div class="notice">
+    Tasks will become active after the official community links and verification system are connected.
+  </div>
+</section>
+
+<!-- FRIENDS -->
+<section class="page" id="friends">
+  <h2 class="section-title">👥 Invite Friends</h2>
+
+  <div class="balance-card">
+    <div class="label">Referral program</div>
+    <div class="balance">+500 <span>PTS</span></div>
+    <div class="small-note">Earn points for every eligible invited friend.</div>
+  </div>
+
+  <div class="invite-box">
+    <h3 style="font-size:15px">Your invitation link</h3>
+    <p style="color:var(--muted);font-size:11px;margin-top:7px">
+      Share Freedom Tap with your friends.
+    </p>
+    <div class="invite-link" id="inviteLink">Loading...</div>
+    <button class="primary-btn" style="width:100%" id="shareButton">
+      INVITE FRIENDS
+    </button>
+  </div>
+
+  <div class="notice">
+    Referral rewards will be verified by the server in the full release.
+  </div>
+</section>
+
+<!-- LEADERBOARD -->
+<section class="page" id="leaderboard">
+  <h2 class="section-title">🏆 Leaderboard</h2>
+  <p style="color:var(--muted);font-size:12px;margin-bottom:17px">
+    Top players in the Freedom community.
+  </p>
+
+  <div class="list-card">
+    <div class="list-left">
+      <div class="list-icon">🥇</div>
+      <div><h3>Top Player</h3><p>Community ranking</p></div>
+    </div>
+    <span class="amount">— PTS</span>
+  </div>
+
+  <div class="list-card">
+    <div class="list-left">
+      <div class="list-icon">🥈</div>
+      <div><h3>Second Place</h3><p>Community ranking</p></div>
+    </div>
+    <span class="amount">— PTS</span>
+  </div>
+
+  <div class="list-card">
+    <div class="list-left">
+      <div class="list-icon">🥉</div>
+      <div><h3>Third Place</h3><p>Community ranking</p></div>
+    </div>
+    <span class="amount">— PTS</span>
+  </div>
+
+  <div class="empty">
+    Live leaderboard will appear when the game server is connected.
+  </div>
+</section>
+
+<!-- WALLET -->
+<section class="page" id="wallet">
+  <h2 class="section-title">💎 Freedom Wallet</h2>
+
+  <div class="wallet-card">
+    <div class="label">FREEDOM TOKEN</div>
+    <h2>Solana Network</h2>
+    <p>Connect your wallet to access future token features.</p>
+  </div>
+
+  <div class="list-card">
+    <div class="list-left">
+      <div class="list-icon">🔗</div>
+      <div>
+        <h3>Token Network</h3>
+        <p>Solana</p>
+      </div>
+    </div>
+    <span class="amount">SOL</span>
+  </div>
+
+  <div class="list-card">
+    <div class="list-left">
+      <div class="list-icon">💰</div>
+      <div>
+        <h3>Reward Balance</h3>
+        <p>Points earned in the game</p>
+      </div>
+    </div>
+    <span class="amount" id="walletPoints">0 PTS</span>
+  </div>
+
+  <div class="notice">
+    Token withdrawals and wallet connections are not active yet. Never share your wallet recovery phrase or private key.
+  </div>
+</section>
+
+</div>
+
+<nav class="nav">
+  <button class="active" data-page="home">
+    <span class="nav-icon">🏠</span>Home
+  </button>
+  <button data-page="tasks">
+    <span class="nav-icon">🎯</span>Tasks
+  </button>
+  <button data-page="friends">
+    <span class="nav-icon">👥</span>Friends
+  </button>
+  <button data-page="leaderboard">
+    <span class="nav-icon">🏆</span>Ranks
+  </button>
+  <button data-page="wallet">
+    <span class="nav-icon">💎</span>Wallet
+  </button>
+</nav>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const tg = window.Telegram?.WebApp;
+
+if (tg) {
+  tg.ready();
+  tg.expand();
+  tg.setHeaderColor("#080d18");
+  tg.setBackgroundColor("#080d18");
+}
+
+const $ = id => document.getElementById(id);
+
+let points = Number(localStorage.getItem("ft_points") || 0);
+let energy = Number(localStorage.getItem("ft_energy") || 100);
+let totalTaps = Number(localStorage.getItem("ft_taps") || 0);
+let lastEnergyTime = Number(localStorage.getItem("ft_energy_time") || Date.now());
+let lastDaily = localStorage.getItem("ft_daily") || "";
+
+const MAX_ENERGY = 100;
+
+function save() {
+  localStorage.setItem("ft_points", points);
+  localStorage.setItem("ft_energy", energy);
+  localStorage.setItem("ft_taps", totalTaps);
+  localStorage.setItem("ft_energy_time", lastEnergyTime);
+}
+
+function updateUI() {
+  $("points").innerHTML = points.toLocaleString() + " <span>PTS</span>";
+  $("energy").textContent = energy + " / " + MAX_ENERGY;
+  $("totalTaps").textContent = totalTaps.toLocaleString();
+  $("energyFill").style.width = energy + "%";
+  $("walletPoints").textContent = points.toLocaleString() + " PTS";
+
+  const today = new Date().toDateString();
+  const claimed = lastDaily === today;
+
+  $("dailyButton").disabled = claimed;
+  $("dailyButton").textContent = claimed ? "CLAIMED ✓" : "+100 PTS";
+}
+
+function showToast(message) {
+  const toast = $("toast");
+  toast.textContent = message;
+  toast.style.display = "block";
+
+  clearTimeout(window.toastTimer);
+  window.toastTimer = setTimeout(() => {
+    toast.style.display = "none";
+  }, 1800);
+}
+
+function tap() {
+  if (energy <= 0) {
+    showToast("No energy! Wait for recovery ⚡");
+    return;
+  }
+
+  points += 1;
+  energy -= 1;
+  totalTaps += 1;
+
+  save();
+  updateUI();
+
+  if (navigator.vibrate) navigator.vibrate(15);
+}
+
+$("tapButton").addEventListener("click", tap);
+
+$("dailyButton").addEventListener("click", () => {
+  const today = new Date().toDateString();
+
+  if (lastDaily === today) {
+    showToast("Daily reward already claimed!");
+    return;
+  }
+
+  points += 100;
+  lastDaily = today;
+
+  localStorage.setItem("ft_daily", lastDaily);
+  save();
+  updateUI();
+
+  showToast("+100 points claimed! 🎁");
+});
+
+function recoverEnergy() {
+  const now = Date.now();
+  const elapsed = Math.floor((now - lastEnergyTime) / 30000);
+
+  if (elapsed > 0 && energy < MAX_ENERGY) {
+    energy = Math.min(MAX_ENERGY, energy + elapsed);
+    lastEnergyTime += elapsed * 30000;
+    save();
+    updateUI();
+  }
+
+  if (energy >= MAX_ENERGY) {
+    lastEnergyTime = now;
+    save();
+  }
+}
+
+setInterval(recoverEnergy, 3000);
+
+$("shareButton").addEventListener("click", async () => {
+  const botUsername = "FreedomTokenTapBot";
+  const userId = tg?.initDataUnsafe?.user?.id || "player";
+  const link = "https://t.me/" + botUsername + "?start=" + userId;
+
+  try {
+    if (tg?.openTelegramLink) {
+      tg.openTelegramLink(
+        "https://t.me/share/url?url=" +
+        encodeURIComponent(link) +
+        "&text=" +
+        encodeURIComponent("Join me on Freedom Tap!")
+      );
+    } else if (navigator.share) {
+      await navigator.share({
+        title: "Freedom Tap",
+        text: "Join me on Freedom Tap!",
+        url: link
+      });
+    } else {
+      await navigator.clipboard.writeText(link);
+      showToast("Invitation link copied!");
+    }
+  } catch (e) {
+    showToast("Unable to share link.");
+  }
+});
+
+const botUsername = "FreedomTokenTapBot";
+const userId = tg?.initDataUnsafe?.user?.id || "player";
+
+$("inviteLink").textContent =
+  "https://t.me/" + botUsername + "?start=" + userId;
+
+document.querySelectorAll(".nav button").forEach(button => {
+  button.addEventListener("click", () => {
+    const page = button.dataset.page;
+
+    document.querySelectorAll(".page").forEach(p => {
+      p.classList.remove("active");
+    });
+
+    document.querySelectorAll(".nav button").forEach(b => {
+      b.classList.remove("active");
+    });
+
+    $(page).classList.add("active");
+    button.classList.add("active");
+  });
+});
+
+updateUI();
+</script>
+
+</body>
+</html>
