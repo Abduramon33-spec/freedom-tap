@@ -1,14 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="theme-color" content="#050914">
+<title>Freedom Tap</title>
+
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+
 <style>
 :root {
   --bg: #050914;
-  --card: rgba(17, 29, 52, .82);
+  --card: #101d34;
   --blue: #3987ff;
-  --cyan: #39e4ff;
+  --cyan: #43dcff;
   --gold: #ffd36a;
   --green: #42e6a4;
-  --text: #f4f7ff;
   --muted: #899bb9;
-  --border: rgba(116, 165, 255, .16);
+  --border: rgba(116,165,255,.18);
 }
 
 * {
@@ -19,20 +28,19 @@
 }
 
 body {
-  min-height: 100vh;
-  padding-bottom: 105px;
-  color: var(--text);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   background:
-    radial-gradient(ellipse at 50% -10%, #17458a 0%, transparent 42%),
-    radial-gradient(ellipse at 100% 45%, #10234c 0%, transparent 35%),
+    radial-gradient(ellipse at 50% 0%, #17458a 0%, transparent 42%),
     #050914;
+  color: #f4f7ff;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  min-height: 100vh;
+  padding-bottom: 100px;
 }
 
 .app {
   max-width: 480px;
   margin: auto;
-  padding: 22px 17px;
+  padding: 20px 16px;
 }
 
 /* HEADER */
@@ -56,17 +64,16 @@ body {
   border-radius: 16px;
   display: grid;
   place-items: center;
-  font-size: 26px;
+  font-size: 27px;
   font-weight: 950;
-  color: white;
-  background: linear-gradient(145deg, #55cfff, #1760e9 60%, #102e87);
-  box-shadow: 0 0 25px #278aff66, inset 0 1px 8px #ffffff70;
+  background: linear-gradient(145deg,#58d8ff,#1760e9,#102e87);
+  box-shadow: 0 0 25px #278aff66;
 }
 
 .brand h1 {
   font-size: 17px;
   font-weight: 950;
-  letter-spacing: 1.2px;
+  letter-spacing: 1px;
 }
 
 .brand p {
@@ -77,13 +84,12 @@ body {
 
 .online {
   color: var(--green);
-  background: #42e6a411;
+  background: #42e6a414;
   border: 1px solid #42e6a444;
-  padding: 8px 12px;
+  padding: 8px 11px;
   border-radius: 30px;
   font-size: 10px;
   font-weight: 800;
-  letter-spacing: 1px;
 }
 
 /* BALANCE */
@@ -91,14 +97,14 @@ body {
 .balance-card {
   position: relative;
   overflow: hidden;
-  padding: 24px 22px;
-  margin-bottom: 15px;
+  padding: 23px;
   border-radius: 25px;
+  margin-bottom: 14px;
   border: 1px solid #55a7ff45;
   background:
-    radial-gradient(circle at 90% 0%, #48caff35, transparent 42%),
-    linear-gradient(135deg, #153d7a, #102443 65%, #0b1930);
-  box-shadow: 0 15px 40px #0005, inset 0 1px 1px #ffffff18;
+    radial-gradient(circle at 90% 0%,#48caff35,transparent 42%),
+    linear-gradient(135deg,#153d7a,#102443 65%,#0b1930);
+  box-shadow: 0 15px 40px #0005;
 }
 
 .balance-card:after {
@@ -107,25 +113,23 @@ body {
   right: 18px;
   top: 5px;
   color: #ffffff12;
-  font-size: 105px;
+  font-size: 100px;
 }
 
 .label {
   color: #b9d6ff;
   font-size: 10px;
   font-weight: 800;
-  letter-spacing: 1.7px;
-  text-transform: uppercase;
+  letter-spacing: 1.6px;
 }
 
 .balance {
   position: relative;
   z-index: 1;
-  font-size: 43px;
+  font-size: 42px;
   font-weight: 950;
   letter-spacing: -2px;
-  margin: 13px 0 7px;
-  text-shadow: 0 3px 20px #46baff40;
+  margin: 12px 0 7px;
 }
 
 .balance span {
@@ -145,16 +149,15 @@ body {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 12px;
-  margin-bottom: 23px;
+  margin-bottom: 20px;
 }
 
 .stat {
-  background: var(--card);
+  background: rgba(17,29,52,.85);
   border: 1px solid var(--border);
   border-radius: 19px;
   padding: 16px;
   box-shadow: 0 8px 24px #0003;
-  backdrop-filter: blur(15px);
 }
 
 .stat-top {
@@ -180,25 +183,23 @@ body {
 
 .energy-fill {
   height: 100%;
-  background: linear-gradient(90deg, #287cff, #42e7ff);
+  width: 100%;
+  background: linear-gradient(90deg,#287cff,#42e7ff);
   border-radius: 20px;
   box-shadow: 0 0 12px #38caff;
   transition: width .3s;
 }
 
-/* TAP AREA */
+/* TAP */
 
 .tap-section {
-  position: relative;
   text-align: center;
-  padding: 20px 0 25px;
-  overflow: hidden;
+  padding: 17px 0 25px;
 }
 
 .tap-section h2 {
   font-size: 23px;
   font-weight: 950;
-  letter-spacing: .3px;
   margin-bottom: 7px;
 }
 
@@ -208,14 +209,13 @@ body {
 }
 
 .tap-button {
-  position: relative;
-  width: 218px;
-  height: 218px;
+  width: 215px;
+  height: 215px;
   border-radius: 50%;
-  margin: 29px auto 22px;
+  margin: 28px auto 21px;
   border: 3px solid #8ceaff;
   background:
-    radial-gradient(circle at 32% 23%, #ffffff 0%, #a9eaff 5%, #48baff 23%, #2676ed 55%, #103b9a 100%);
+    radial-gradient(circle at 32% 23%,#fff 0%,#a9eaff 5%,#48baff 23%,#2676ed 55%,#103b9a 100%);
   color: white;
   display: flex;
   flex-direction: column;
@@ -224,38 +224,22 @@ body {
   cursor: pointer;
   user-select: none;
   box-shadow:
-    0 0 0 7px #328aff18,
-    0 0 0 15px #328aff0d,
+    0 0 0 8px #328aff18,
+    0 0 0 17px #328aff0d,
     0 0 45px #278aff85,
     0 18px 45px #0008,
-    inset 0 5px 18px #ffffff90,
-    inset 0 -12px 25px #071c61;
-  transition: transform .12s, filter .12s;
-  animation: coinGlow 3s ease-in-out infinite;
+    inset 0 5px 18px #ffffff90;
+  animation: glow 3s ease-in-out infinite;
+  transition: transform .12s;
 }
 
 .tap-button:active {
   transform: scale(.92);
-  filter: brightness(1.2);
 }
 
-@keyframes coinGlow {
-  0%, 100% {
-    box-shadow:
-      0 0 0 7px #328aff18,
-      0 0 0 15px #328aff0d,
-      0 0 35px #278aff70,
-      0 18px 45px #0008,
-      inset 0 5px 18px #ffffff90;
-  }
-  50% {
-    box-shadow:
-      0 0 0 9px #328aff22,
-      0 0 0 19px #328aff0d,
-      0 0 58px #35d9ffb0,
-      0 18px 45px #0008,
-      inset 0 5px 18px #ffffff90;
-  }
+@keyframes glow {
+  0%,100% { filter: brightness(1); }
+  50% { filter: brightness(1.2); }
 }
 
 .tap-icon {
@@ -268,7 +252,6 @@ body {
   font-size: 17px;
   letter-spacing: 4px;
   margin-top: 8px;
-  text-shadow: 0 2px 8px #082b70;
 }
 
 .tap-hint {
@@ -278,7 +261,7 @@ body {
   letter-spacing: 2px;
 }
 
-/* TITLES AND REWARDS */
+/* REWARDS */
 
 .section-title {
   font-size: 17px;
@@ -289,7 +272,7 @@ body {
 .reward-card,
 .list-card,
 .invite-box {
-  background: linear-gradient(145deg, #14233c, #0d192c);
+  background: linear-gradient(145deg,#14233c,#0d192c);
   border: 1px solid var(--border);
   border-radius: 19px;
   box-shadow: 0 8px 24px #0003;
@@ -312,15 +295,14 @@ body {
 
 .reward-icon,
 .list-icon {
-  width: 46px;
-  height: 46px;
+  width: 45px;
+  height: 45px;
   flex-shrink: 0;
   border-radius: 15px;
   display: grid;
   place-items: center;
-  font-size: 23px;
-  background: linear-gradient(145deg, #253d61, #172944);
-  border: 1px solid #ffffff12;
+  font-size: 22px;
+  background: linear-gradient(145deg,#253d61,#172944);
 }
 
 .reward-card h3,
@@ -337,20 +319,15 @@ body {
 }
 
 .primary-btn {
-  background: linear-gradient(110deg, #287aff, #36caff);
+  background: linear-gradient(110deg,#287aff,#36caff);
   color: white;
   border: 0;
   border-radius: 12px;
   padding: 12px 15px;
   font-weight: 900;
   font-size: 11px;
-  letter-spacing: .3px;
-  box-shadow: 0 5px 18px #238cff44;
   cursor: pointer;
-}
-
-.primary-btn:active {
-  transform: scale(.96);
+  box-shadow: 0 5px 18px #238cff44;
 }
 
 .primary-btn:disabled {
@@ -367,11 +344,11 @@ body {
   right: 0;
   max-width: 480px;
   margin: auto;
-  background: rgba(8, 16, 31, .94);
+  background: rgba(8,16,31,.96);
   border-top: 1px solid #3a5d8b55;
-  backdrop-filter: blur(22px);
+  backdrop-filter: blur(20px);
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(5,1fr);
   padding: 12px 5px calc(12px + env(safe-area-inset-bottom));
   z-index: 10;
 }
@@ -383,7 +360,6 @@ body {
   font-size: 10px;
   font-weight: 700;
   cursor: pointer;
-  transition: .2s;
 }
 
 .nav button.active {
@@ -397,7 +373,7 @@ body {
   margin-bottom: 5px;
 }
 
-/* OTHER PAGES */
+/* PAGES */
 
 .page {
   display: none;
@@ -409,8 +385,8 @@ body {
 }
 
 @keyframes pageIn {
-  from { opacity: 0; transform: translateY(7px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {opacity:0;transform:translateY(7px);}
+  to {opacity:1;transform:translateY(0);}
 }
 
 .list-card {
@@ -447,13 +423,12 @@ body {
 
 .wallet-card {
   background:
-    radial-gradient(circle at 90% 0%, #47d5ff35, transparent 45%),
-    linear-gradient(135deg, #19427d, #101e36);
+    radial-gradient(circle at 90% 0%,#47d5ff35,transparent 45%),
+    linear-gradient(135deg,#19427d,#101e36);
   border: 1px solid #55a7ff45;
   border-radius: 22px;
   padding: 22px;
   margin-bottom: 15px;
-  box-shadow: 0 12px 30px #0004;
 }
 
 .wallet-card h2 {
@@ -497,24 +472,510 @@ body {
   padding: 13px 19px;
   border-radius: 14px;
   font-size: 12px;
-  box-shadow: 0 8px 25px #0008;
   display: none;
   z-index: 30;
   white-space: nowrap;
 }
 
-@media (max-width: 360px) {
+@media(max-width:360px) {
   .tap-button {
     width: 190px;
     height: 190px;
   }
-
   .balance {
     font-size: 36px;
   }
-
-  .primary-btn {
-    padding: 10px 11px;
-  }
 }
 </style>
+</head>
+
+<body>
+
+<div class="app">
+
+<header class="header">
+  <div class="brand">
+    <div class="logo">F</div>
+    <div>
+      <h1>FREEDOM TAP</h1>
+      <p>Freedom Token Community</p>
+    </div>
+  </div>
+  <div class="online">● LIVE</div>
+</header>
+
+<!-- HOME -->
+
+<section class="page active" id="home">
+
+  <div class="balance-card">
+    <div class="label">YOUR TOTAL BALANCE</div>
+    <div class="balance" id="points">0 <span>PTS</span></div>
+    <div class="small-note">Keep tapping. Build your rewards.</div>
+  </div>
+
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-top">⚡ ENERGY</div>
+      <div class="stat-value" id="energy">100 / 100</div>
+      <div class="energy-bar">
+        <div class="energy-fill" id="energyFill"></div>
+      </div>
+    </div>
+
+    <div class="stat">
+      <div class="stat-top">👆 TOTAL TAPS</div>
+      <div class="stat-value" id="totalTaps">0</div>
+    </div>
+  </div>
+
+  <div class="tap-section">
+    <h2>Tap to Earn</h2>
+    <p>Tap the Freedom coin and collect points</p>
+
+    <button class="tap-button" id="tapButton">
+      <span class="tap-icon">🪙</span>
+      <strong>TAP</strong>
+    </button>
+
+    <div class="tap-hint">+1 POINT PER TAP</div>
+  </div>
+
+  <h2 class="section-title">Daily Reward</h2>
+
+  <div class="reward-card">
+    <div class="reward-left">
+      <div class="reward-icon">🎁</div>
+      <div>
+        <h3>Daily Check-in</h3>
+        <p>Claim your daily bonus</p>
+      </div>
+    </div>
+    <button class="primary-btn" id="dailyButton">+100 PTS</button>
+  </div>
+
+</section>
+
+<!-- TASKS -->
+
+<section class="page" id="tasks">
+
+  <h2 class="section-title">🎯 Tasks & Rewards</h2>
+
+  <p style="color:var(--muted);font-size:12px;margin-bottom:17px">
+    Complete activities and grow your points.
+  </p>
+
+  <div class="list-card">
+    <div class="list-left">
+      <div class="list-icon">🚀</div>
+      <div>
+        <h3>Join Freedom Community</h3>
+        <p>Community task</p>
+      </div>
+    </div>
+    <span class="amount">+500 PTS</span>
+  </div>
+
+  <div class="list-card">
+    <div class="list-left">
+      <div class="list-icon">📢</div>
+      <div>
+        <h3>Follow our updates</h3>
+        <p>Social task</p>
+      </div>
+    </div>
+    <span class="amount">+300 PTS</span>
+  </div>
+
+  <div class="notice">
+    Tasks will become active after the official community links and verification system are connected.
+  </div>
+
+</section>
+
+<!-- FRIENDS -->
+
+<section class="page" id="friends">
+
+  <h2 class="section-title">👥 Invite Friends</h2>
+
+  <div class="balance-card">
+    <div class="label">REFERRAL PROGRAM</div>
+    <div class="balance">+500 <span>PTS</span></div>
+    <div class="small-note">Earn points for every eligible invited friend.</div>
+  </div>
+
+  <div class="invite-box">
+    <h3 style="font-size:15px">Your invitation link</h3>
+    <p style="color:var(--muted);font-size:11px;margin-top:7px">
+      Share Freedom Tap with your friends.
+    </p>
+
+    <div class="invite-link" id="inviteLink">Loading...</div>
+
+    <button class="primary-btn" style="width:100%" id="shareButton">
+      INVITE FRIENDS
+    </button>
+  </div>
+
+  <div class="notice">
+    Referral rewards will be verified by the server in the full release.
+  </div>
+
+</section>
+
+<!-- LEADERBOARD -->
+
+<section class="page" id="leaderboard">
+
+  <h2 class="section-title">🏆 Leaderboard</h2>
+
+  <p style="color:var(--muted);font-size:12px;margin-bottom:17px">
+    Top players in the Freedom community.
+  </p>
+
+  <div class="list-card">
+    <div class="list-left">
+      <div class="list-icon">🥇</div>
+      <div>
+        <h3>Top Player</h3>
+        <p>Community ranking</p>
+      </div>
+    </div>
+    <span class="amount">— PTS</span>
+  </div>
+
+  <div class="list-card">
+    <div class="list-left">
+      <div class="list-icon">🥈</div>
+      <div>
+        <h3>Second Place</h3>
+        <p>Community ranking</p>
+      </div>
+    </div>
+    <span class="amount">— PTS</span>
+  </div>
+
+  <div class="list-card">
+    <div class="list-left">
+      <div class="list-icon">🥉</div>
+      <div>
+        <h3>Third Place</h3>
+        <p>Community ranking</p>
+      </div>
+    </div>
+    <span class="amount">— PTS</span>
+  </div>
+
+  <div class="empty">
+    Live leaderboard will appear when the game server is connected.
+  </div>
+
+</section>
+
+<!-- WALLET -->
+
+<section class="page" id="wallet">
+
+  <h2 class="section-title">💎 Freedom Wallet</h2>
+
+  <div class="wallet-card">
+    <div class="label">FREEDOM TOKEN</div>
+    <h2>Solana Network</h2>
+    <p>Connect your wallet to access future token features.</p>
+  </div>
+
+  <div class="list-card">
+    <div class="list-left">
+      <div class="list-icon">🔗</div>
+      <div>
+        <h3>Token Network</h3>
+        <p>Solana</p>
+      </div>
+    </div>
+    <span class="amount">SOL</span>
+  </div>
+
+  <div class="list-card">
+    <div class="list-left">
+      <div class="list-icon">💰</div>
+      <div>
+        <h3>Reward Balance</h3>
+        <p>Points earned in the game</p>
+      </div>
+    </div>
+    <span class="amount" id="walletPoints">0 PTS</span>
+  </div>
+
+  <div class="notice">
+    Token withdrawals and wallet connections are not active yet. Never share your wallet recovery phrase or private key.
+  </div>
+
+</section>
+
+</div>
+
+<!-- BOTTOM NAVIGATION -->
+
+<nav class="nav">
+
+  <button class="active" data-page="home">
+    <span class="nav-icon">🏠</span>Home
+  </button>
+
+  <button data-page="tasks">
+    <span class="nav-icon">🎯</span>Tasks
+  </button>
+
+  <button data-page="friends">
+    <span class="nav-icon">👥</span>Friends
+  </button>
+
+  <button data-page="leaderboard">
+    <span class="nav-icon">🏆</span>Ranks
+  </button>
+
+  <button data-page="wallet">
+    <span class="nav-icon">💎</span>Wallet
+  </button>
+
+</nav>
+
+<div class="toast" id="toast"></div>
+
+<script>
+
+/* TELEGRAM */
+
+const tg = window.Telegram?.WebApp;
+
+if (tg) {
+  tg.ready();
+  tg.expand();
+
+  try {
+    tg.setHeaderColor("#050914");
+    tg.setBackgroundColor("#050914");
+  } catch(e) {}
+}
+
+/* HELPERS */
+
+const $ = id => document.getElementById(id);
+
+/* GAME DATA */
+
+let points = Number(localStorage.getItem("ft_points") || 0);
+let energy = Number(localStorage.getItem("ft_energy") || 100);
+let totalTaps = Number(localStorage.getItem("ft_taps") || 0);
+
+let lastEnergyTime =
+  Number(localStorage.getItem("ft_energy_time") || Date.now());
+
+let lastDaily =
+  localStorage.getItem("ft_daily") || "";
+
+const MAX_ENERGY = 100;
+
+/* SAVE */
+
+function save() {
+  localStorage.setItem("ft_points", points);
+  localStorage.setItem("ft_energy", energy);
+  localStorage.setItem("ft_taps", totalTaps);
+  localStorage.setItem("ft_energy_time", lastEnergyTime);
+}
+
+/* USER INTERFACE */
+
+function updateUI() {
+
+  $("points").innerHTML =
+    points.toLocaleString() + " <span>PTS</span>";
+
+  $("energy").textContent =
+    energy + " / " + MAX_ENERGY;
+
+  $("totalTaps").textContent =
+    totalTaps.toLocaleString();
+
+  $("energyFill").style.width =
+    (energy / MAX_ENERGY * 100) + "%";
+
+  $("walletPoints").textContent =
+    points.toLocaleString() + " PTS";
+
+  const today = new Date().toDateString();
+  const claimed = lastDaily === today;
+
+  $("dailyButton").disabled = claimed;
+
+  $("dailyButton").textContent =
+    claimed ? "CLAIMED ✓" : "+100 PTS";
+}
+
+/* TOAST */
+
+function showToast(message) {
+
+  const toast = $("toast");
+
+  toast.textContent = message;
+  toast.style.display = "block";
+
+  clearTimeout(window.toastTimer);
+
+  window.toastTimer = setTimeout(() => {
+    toast.style.display = "none";
+  }, 1800);
+}
+
+/* TAP */
+
+function tap() {
+
+  if (energy <= 0) {
+    showToast("No energy! Wait for recovery ⚡");
+    return;
+  }
+
+  points += 1;
+  energy -= 1;
+  totalTaps += 1;
+
+  save();
+  updateUI();
+
+  if (navigator.vibrate) {
+    navigator.vibrate(15);
+  }
+}
+
+$("tapButton").addEventListener("click", tap);
+
+/* DAILY REWARD */
+
+$("dailyButton").addEventListener("click", () => {
+
+  const today = new Date().toDateString();
+
+  if (lastDaily === today) {
+    showToast("Daily reward already claimed!");
+    return;
+  }
+
+  points += 100;
+  lastDaily = today;
+
+  localStorage.setItem("ft_daily", lastDaily);
+
+  save();
+  updateUI();
+
+  showToast("+100 points claimed! 🎁");
+});
+
+/* ENERGY RECOVERY */
+
+function recoverEnergy() {
+
+  const now = Date.now();
+
+  const elapsed =
+    Math.floor((now - lastEnergyTime) / 30000);
+
+  if (elapsed > 0 && energy < MAX_ENERGY) {
+
+    energy = Math.min(MAX_ENERGY, energy + elapsed);
+
+    lastEnergyTime += elapsed * 30000;
+
+    save();
+    updateUI();
+  }
+
+  if (energy >= MAX_ENERGY) {
+    lastEnergyTime = now;
+    save();
+  }
+}
+
+setInterval(recoverEnergy, 3000);
+
+/* INVITE LINK */
+
+const botUsername = "FreedomTokenTapBot";
+
+const userId =
+  tg?.initDataUnsafe?.user?.id || "player";
+
+const inviteUrl =
+  "https://t.me/" + botUsername + "?start=" + userId;
+
+$("inviteLink").textContent = inviteUrl;
+
+/* SHARE */
+
+$("shareButton").addEventListener("click", async () => {
+
+  try {
+
+    const shareUrl =
+      "https://t.me/share/url?url=" +
+      encodeURIComponent(inviteUrl) +
+      "&text=" +
+      encodeURIComponent("Join me on Freedom Tap!");
+
+    if (tg?.openTelegramLink) {
+      tg.openTelegramLink(shareUrl);
+    } else if (navigator.share) {
+      await navigator.share({
+        title: "Freedom Tap",
+        text: "Join me on Freedom Tap!",
+        url: inviteUrl
+      });
+    } else {
+      await navigator.clipboard.writeText(inviteUrl);
+      showToast("Invitation link copied!");
+    }
+
+  } catch(e) {
+    showToast("Unable to share link.");
+  }
+
+});
+
+/* NAVIGATION */
+
+document.querySelectorAll(".nav button").forEach(button => {
+
+  button.addEventListener("click", () => {
+
+    const page = button.dataset.page;
+
+    document.querySelectorAll(".page").forEach(p => {
+      p.classList.remove("active");
+    });
+
+    document.querySelectorAll(".nav button").forEach(b => {
+      b.classList.remove("active");
+    });
+
+    $(page).classList.add("active");
+
+    button.classList.add("active");
+
+    window.scrollTo(0, 0);
+  });
+
+});
+
+/* START */
+
+updateUI();
+
+</script>
+
+</body>
+</html>
